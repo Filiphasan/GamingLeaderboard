@@ -1,0 +1,67 @@
+﻿version: '3.7'
+
+services:
+  leaderboard-api:
+    image: leaderboard-api
+    container_name: leaderboard-api
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - postgres
+      - redis
+      - elasticsearch
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=8mn1JpZ5oumuU2zTNwgK
+      - POSTGRES_DB=leaderboard
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.1
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=8mn1JpZ5oumuU2zTNwgK
+      - ELASTIC_USERNAME=elastic
+      - xpack.security.enabled=true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.16.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=8mn1JpZ5oumuU2zTNwgK
+      - SERVER_NAME=kibana
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - KIBANA_USERNAME=kibana
+      - KIBANA_PASSWORD=8mn1JpZ5oumuU2zTNwgK
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=8mn1JpZ5oumuU2zTNwgK
+    command:
+      - redis-server
