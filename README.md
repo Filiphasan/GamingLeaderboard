@@ -27,6 +27,7 @@ docker compose up -d
 - Advantage: Higher Scalability
 
 ## Performance
+- Store user score in Redis sorted set
 - Create Index for faster search in Users table for Username field, Unique.
 - Create Index for faster search and grouping in UserScores table for UserId and Score fields.
 
