@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Api.Common.Model.Request;
 using Api.Extension;
 using Api.Feature.UserScore.GetTopUserScores;
@@ -23,8 +24,8 @@ public class UserScoreEndpoint : ICarterModule
 
     private static async Task<IResult> AddUserScoreAsync(AddUserScoreRequest request, ISender sender, IHttpContextAccessor httpContextAccessor)
     {
-        var userId = httpContextAccessor.HttpContext!.User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
-        var result = await sender.Send(request.ToCommand(int.Parse(userId!)));
+        var userId = Convert.ToInt32(httpContextAccessor.HttpContext!.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+        var result = await sender.Send(request.ToCommand(userId));
         return result.ToHttpResult();
     }
 

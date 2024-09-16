@@ -21,7 +21,7 @@ public class TokenService(AppSetting appSetting) : ITokenService
             new(JwtRegisteredClaimNames.Sub, model.Id.ToString()),
             new(JwtRegisteredClaimNames.Name, model.Username),
         };
-        var jwtToken = new JwtSecurityToken(claims: claimList,notBefore: DateTime.Now, expires: DateTime.Now.AddMinutes(appSetting.Jwt.ExpiresInMinutes), signingCredentials: credentials);
+        var jwtToken = new JwtSecurityToken(claims: claimList, expires: DateTime.Now.AddMinutes(appSetting.Jwt.ExpiresInMinutes), signingCredentials: credentials);
         var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
         return Task.FromResult((token, appSetting.Jwt.ExpiresInMinutes));
     }

@@ -13,7 +13,9 @@ public static class MessageConstant
     public static class UserMessage
     {
         public const string UsernameIsRequired = "Username is required";
+        public const string UsernameIsNotValid = "Username is not valid, minimum length is 3 and maximum length is 30 and can only contain letters and numbers";
         public const string PasswordIsRequired = "Password is required";
+        public const string PasswordIsNotValid = "Password is not valid, minimum length is 6 and maximum length is 20 and contain letters and numbers";
         public const string DeviceIdIsRequired = "DeviceId is required";
         public const string DeviceIdIsNotValid = "DeviceId is not valid";
         public const string UsernameOrPasswordIsNotCorrect = "Username or password is not correct";

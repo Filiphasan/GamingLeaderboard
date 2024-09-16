@@ -28,5 +28,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.CreatedAt)
             .HasColumnName("CreatedAt")
             .IsRequired();
+
+        builder.HasIndex(x => x.Username, "IX_Users_Username")
+            .IsUnique();
     }
 }

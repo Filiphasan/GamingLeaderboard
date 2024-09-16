@@ -11,6 +11,9 @@ services:
       - "5001:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - Settings:Redis:Host=redis
+      - Settings:Elastic:Host=elasticsearch
+      - ConnectionStrings:Leaderboard=Server=postgres;Port=5432;Database=leaderboard;User Id=postgres;Password=8mn1JpZ5oumuU2zTNwgK;
     depends_on:
       - postgres
       - redis
@@ -48,7 +51,7 @@ services:
       - ELASTICSEARCH_PASSWORD=8mn1JpZ5oumuU2zTNwgK
       - SERVER_NAME=kibana
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - KIBANA_USERNAME=kibana
+      - KIBANA_USERNAME=elastic
       - KIBANA_PASSWORD=8mn1JpZ5oumuU2zTNwgK
     ports:
       - "5601:5601"

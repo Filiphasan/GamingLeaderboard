@@ -24,7 +24,7 @@ public class AddUserScoreCommandHandler(
         {
             UserId = user.Id,
             Score = request.Score,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
         };
         await context.UserScores.AddAsync(userScore, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);

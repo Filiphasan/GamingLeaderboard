@@ -42,12 +42,12 @@ public class RedisCacheService : IRedisCacheService
 
     public async Task AddUserScoreAsync(string key, string userName, int score)
     {
-        await _database.SortedSetAddAsync(key, userName, score);
+        await _database.SortedSetIncrementAsync(key, userName, score);
     }
 
     public async Task<RedisUserScoreModel[]> GetUserScoresAsync(string key, long start, long stop)
     {
-        var userScores = await _database.SortedSetRangeByRankWithScoresAsync(key, start, stop);
+        var userScores = await _database.SortedSetRangeByRankWithScoresAsync(key, start, stop - 1, Order.Descending);
         return userScores.Select(x => new RedisUserScoreModel
         {
             Username = x.Element.ToString(),
