@@ -1,4 +1,5 @@
 using Api;
+using Api.Middleware;
 using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCarter();
-builder.Services.AddApi();
+builder.Services.AddApi(builder.Configuration);
 
 var app = builder.Build();
 
@@ -19,6 +20,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+app.UseAuthentication();
+app.UseMiddleware<LoggingMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapCarter();
 
+app.MigratePendingMigrations();
 await app.RunAsync();
