@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Api.Common.Model.Request;
 using Api.Extension;
 using Api.Feature.UserScore.GetTopUserScores;

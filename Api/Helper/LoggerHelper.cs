@@ -1,9 +1,7 @@
 ﻿using Api.Common.Model.Options;
 using Serilog;
 using Serilog.Debugging;
-using Serilog.Formatting.Json;
 using Serilog.Sinks.Elasticsearch;
-using Serilog.Sinks.File;
 
 namespace Api.Helper;
 

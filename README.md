@@ -15,6 +15,7 @@ git clone https://github.com/Filiphasan/GamingLeaderboard.git
 cd GamingLeaderboard
 docker compose up -d
 ```
+And Go to http://localhost:5001/swagger/index.html
 
 # Scalability and Performance
 ## Scalability
