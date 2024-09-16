@@ -8,7 +8,8 @@ public sealed class FvResultFactory : IFluentValidationAutoValidationResultFacto
 {
     public IResult CreateResult(EndpointFilterInvocationContext context, ValidationResult validationResult)
     {
-        var message = validationResult.Errors[0].ErrorMessage;
+        var messages = validationResult.Errors.Select(x => x.ErrorMessage).ToArray();
+        var message = string.Join(", ", messages);
         var result = Result<NoDataResult>.BadRequest(message);
         return Results.Json(result, contentType: "application/json", statusCode: result.StatusCode);
     }

@@ -30,5 +30,8 @@ public class UserScoreConfiguration : IEntityTypeConfiguration<UserScore>
         builder.HasOne(x => x.User)
             .WithMany(x => x.UserScores)
             .HasForeignKey(x => x.UserId);
+
+        builder.HasIndex(x => new { x.UserId, x.Score }, "IX_UserScore_UserId_Score")
+            .IsUnique(false);
     }
 }

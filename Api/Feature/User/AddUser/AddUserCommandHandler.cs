@@ -17,7 +17,7 @@ public class AddUserCommandHandler(
         var usernameExists = await context.Users.AnyAsync(x => x.Username == request.Username, cancellationToken);
         if (usernameExists)
         {
-            Result<AddUserResponse>.BadRequest(MessageConstant.UserMessage.UsernameAlreadyExists);
+            return Result<AddUserResponse>.BadRequest(MessageConstant.UserMessage.UsernameAlreadyExists);
         }
 
         var hashedPassword = await passwordService.HashPasswordAsync(request.Password);
@@ -25,7 +25,7 @@ public class AddUserCommandHandler(
         {
             Username = request.Username,
             Password = hashedPassword,
-            CreatedAt = DateTime.Now,
+            CreatedAt = DateTime.UtcNow,
         };
         await context.Users.AddAsync(user, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
@@ -34,7 +34,7 @@ public class AddUserCommandHandler(
         {
             UserId = user.Id,
             DeviceId = request.DeviceId,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
         };
         await context.UserDevices.AddAsync(userDevice, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);

@@ -9,7 +9,7 @@ namespace Api.Feature.UserScore.GetTopUserScores;
 public class GetTopUserScoresQueryHandler(
     IRedisCacheService redisCacheService,
     LeaderboardContext context
-): IRequestHandler<GetTopUserScoresQuery, Result<IList<GetTopUserScoresResponse>>>
+) : IRequestHandler<GetTopUserScoresQuery, Result<IList<GetTopUserScoresResponse>>>
 {
     public async Task<Result<IList<GetTopUserScoresResponse>>> Handle(GetTopUserScoresQuery request, CancellationToken cancellationToken)
     {
@@ -35,7 +35,7 @@ public class GetTopUserScoresQueryHandler(
         {
             return;
         }
-        
+
         var userScores = await context.UserScores
             .GroupBy(x => new { x.UserId })
             .Select(x => new
